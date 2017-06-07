@@ -25,6 +25,8 @@
 
 namespace NotificationChannels\Front;
 
+use NotificationChannels\Front\Exceptions\FrontException;
+
 class FrontSMS
 {
 
