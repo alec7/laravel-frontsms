@@ -23,7 +23,7 @@
  * Anders Evenrud <andersevenrud@gmail.com>
  */
 
-namespace NotificationChannels\Front\Exceptions;
+namespace NotificationChannels\Front;
 
 use Exception;
 

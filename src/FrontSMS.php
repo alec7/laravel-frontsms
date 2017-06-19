@@ -25,7 +25,7 @@
 
 namespace NotificationChannels\Front;
 
-use NotificationChannels\Front\Exceptions\FrontException;
+use NotificationChannels\Front\FrontException;
 
 class FrontSMS
 {
@@ -67,7 +67,7 @@ class FrontSMS
      * @param \NotificationChannels $intance
      * @param Array $params
      *
-     * @throws \NotificationChannels\Front\Exceptions\FrontException
+     * @throws \NotificationChannels\Front\FrontException
      *
      * @return void
      */

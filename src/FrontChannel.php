@@ -29,7 +29,7 @@ use GuzzleHttp\Client;
 
 use Illuminate\Notifications\Notification;
 
-use NotificationChannels\Front\Exceptions\FrontException;
+use NotificationChannels\Front\FrontException;
 use NotificationChannels\Front\FrontSMS;
 
 class FrontChannel
