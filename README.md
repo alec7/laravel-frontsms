@@ -1,6 +1,8 @@
-# Front SMS Notifications Channel for Laravel
+# Laravel Front SMS Provider(s)
 
-Easy SMS notifications with [Front](http://fro.no/).
+Easy SMS with [Front](http://fro.no/).
+
+Contains Notification Channel, Service Provider and a Facade.
 
 ## Installation
 
@@ -10,37 +12,67 @@ $ composer require andersevenrud/laravel-frontsms
 
 ## Configuration
 
-In `config/services.php`:
+In `config/app.php`:
 
-```php
-return [
-    'frontsms' => [
-        'endpoint' => env('FRONTSMS_ENDPOINT', 'https://www.pling.as/psk/push.php'),
-        'serviceid' => env('FRONTSMS_SERVICEID', 1234),
-        'fromid' => env('FRONTSMS_FROMID', 'myapplication')
-    ]
-];
 ```
 
-Then set up `.env` accordingly.
+'providers' => [
+    Laravel\FrontSMS\FrontSMSServiceProvider::class,
+],
+
+'aliases' => [
+  'FrontSMS' => Laravel\FrontSMS\Facades\FrontSMS::class
+]
+```
+
+Then publish configurations:
+
+```
+$ php artisan vendor:publish
+```
+
+You now have `config/frontsms.php`.
 
 ## Usage
 
+### General
+
 ```php
-use NotificationChannels\Front\FrontChannel;
-use NotificationChannels\Front\FrontMessage;
+use FrontSMS;
+
+function something() {
+
+  $result = FrontSMS::send(12345678, 'hello world!');
+
+}
+
+```
+
+### Notifications
+
+```php
+use NotificationChannels\FrontSMS\FrontSMSChannel;
+use NotificationChannels\FrontSMS\FrontSMSMessage;
 use Illuminate\Notifications\Notification;
 
 class ExampleNotification extends Notification
 {
     public function via($notifiable)
     {
-        return [FrontChannel::class];
+        return [FrontSMSChannel::class];
     }
 
     public function toFront($notifiable)
     {
-        return FrontMessage::create('12345678', 'Hello world!');
+        return FrontSMSMessage::create('12345678', 'Hello world!');
     }
 }
 ```
+
+## Changelog
+
+* **0.6.0** - Initial release
+
+## License
+
+MIT

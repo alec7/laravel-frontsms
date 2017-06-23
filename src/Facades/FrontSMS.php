@@ -23,9 +23,23 @@
  * Anders Evenrud <andersevenrud@gmail.com>
  */
 
-namespace NotificationChannels\Front;
+namespace Laravel\FrontSMS\Facades;
 
-use Exception;
+use Illuminate\Support\Facades\Facade;
 
-class FrontException extends Exception
-{}
+/**
+ * A facade provider for the Front SMS API
+ * @author Anders Evenrud <andersevenrud@gmail.com>
+ */
+class FrontSMS extends Facade
+{
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string
+     */
+    protected static function getFacadeAccessor()
+    {
+        return 'frontsms';
+    }
+}

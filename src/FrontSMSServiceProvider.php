@@ -23,40 +23,62 @@
  * Anders Evenrud <andersevenrud@gmail.com>
  */
 
-namespace NotificationChannels\Front;
+namespace Laravel\FrontSMS;
 
-class FrontMessage
+use Illuminate\Support\ServiceProvider;
+use FrontSMS\FrontSMS;
+
+/**
+ * A service provider for Front SMS API
+ * @author Anders Evenrud <andersevenrud@gmail.com>
+ */
+class FrontSMSServiceProvider extends ServiceProvider
 {
-    protected $to;
-    protected $message;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
 
     /**
-     * @param String $to
-     * @param String $message
+     * Perform post-registration booting of services.
+     *
+     * @return void
      */
-    static public function create($to, $message)
+    public function boot()
     {
-        return new static($to, $message);
+        $this->publishes([
+            __DIR__.'/config/frontsms.php' => config_path('frontsms.php'),
+        ]);
     }
 
     /**
-     * @param String $to
-     * @param String $message
+     * Register the service provider.
+     *
+     * @return void
      */
-    public function __construct($to, $message)
+    public function register()
     {
-        $this->to = $to;
-        $this->message = $message;
+        $this->app->singleton('frontsms', function($app) {
+            return new FrontSMS([
+                'serviceid' => config('frontsms.serviceid'),
+                'fromid' => config('frontsms.fromid')
+            ]);
+        });
+
+        $this->app->alias('frontsms', FrontSMS::class);
     }
 
     /**
-     * @return Array
+     * Get the services provided by the provider.
+     *
+     * @return array
      */
-    public function toArray()
+    public function provides()
     {
         return [
-            'phoneno' => $this->to,
-            'txt' => $this->message
+            'frontsms'
         ];
     }
 }

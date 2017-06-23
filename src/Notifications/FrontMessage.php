@@ -23,64 +23,40 @@
  * Anders Evenrud <andersevenrud@gmail.com>
  */
 
-namespace NotificationChannels\Front;
+namespace NotificationChannels\FrontSMS;
 
-use GuzzleHttp\Client;
-
-use Illuminate\Notifications\Notification;
-
-use NotificationChannels\Front\FrontException;
-use NotificationChannels\Front\FrontSMS;
-
-class FrontChannel
+class FrontSMSMessage
 {
-    protected $client;
+    protected $to;
+    protected $message;
 
     /**
-     * @param GuzzleHttp\Client $client
-     */
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
-
-    /**
-     * Sends SMS via the Notifyable Laravel interfaces
-     *
-     * @param Object $notifiable
-     * @param Illuminate\Notifications\Notification $notification
-     */
-    public function send($notifiable, Notification $notification)
-    {
-        $params = $notification->toFront($notifiable)->toArray();
-
-        FrontSMS::sendRequest($this, [
-            'txt' => $params['txt'],
-            'phoneno' => $params['phoneno']
-        ]);
-    }
-
-    /**
-     * Sends a raw message without Notifyable
-     *
      * @param String $to
      * @param String $message
      */
-    static public function sendRaw($to, $message)
+    static public function create($to, $message)
     {
-        $instance = new static(new Client());
-
-        FrontSMS::sendRequest($instance, [
-            'phoneno' => $to,
-            'txt' => $message
-        ]);
+        return new static($to, $message);
     }
 
     /**
-     * @return GuzzleHttp\Client
+     * @param String $to
+     * @param String $message
      */
-    public function getClient()
+    public function __construct($to, $message)
     {
-        return $this->client;
+        $this->to = $to;
+        $this->message = $message;
+    }
+
+    /**
+     * @return Array
+     */
+    public function toArray()
+    {
+        return [
+            'phoneno' => $this->to,
+            'txt' => $this->message
+        ];
     }
 }
