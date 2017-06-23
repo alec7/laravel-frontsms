@@ -71,6 +71,7 @@ class ExampleNotification extends Notification
 
 ## Changelog
 
+* **0.6.1** - Updated composer.json
 * **0.6.0** - Initial release
 
 ## License

@@ -2,7 +2,7 @@
   "name": "andersevenrud/laravel-frontsms",
   "description": "Laravel Front SMS Provider(s)",
   "license": "MIT",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "authors": [
     {
       "name": "Anders Evenrud",
@@ -19,14 +19,5 @@
       "Laravel\\FrontSMS\\": "src",
       "NotificationChannels\\FrontSMS\\": "src/Notifications"
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Laravel\\FrontSMS\\": "src",
-      "NotificationChannels\\FrontSMS\\": "src/Notifications"
-    }
-  },
-  "config": {
-    "sort-packages": true
   }
 }
